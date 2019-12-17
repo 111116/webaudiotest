@@ -6,9 +6,14 @@
     </head>
     <body>
 		<div>
+			This will play an mp3 containing 9 click sounds once, and a wav containing a higher-pitched click sound several times. They start at the same time.
+			</br>
 			set appropriate volume before listening.
 		</div>
 		<input type="button" id="button" value="start">
+		<br>
+		<!--wav extra delay (ms)-->
+		<input type="number" id="number" value="0" min="0" max="100" hidden>
 		<br>
 		<br>
 		<a href="https://github.com/111116/webaudiotest">Github</a>
@@ -48,9 +53,9 @@
 			    source.start(t,0);
 			}
 			
+			var t0 = 0;
 			function play() {
 			    let t = audio.currentTime;
-			    let t0 = 0;
 			    start(a1, t + 0);
 			    start(a2, t + t0 + 0);
 			    start(a2, t + t0 + 0.8);
@@ -62,6 +67,9 @@
 			window.addEventListener('DOMContentLoaded', function() {
 			    document.getElementById("button").onclick = function() {
 			        play();
+			    }
+			    document.getElementById("number").onchange = function() {
+			    	t0 = +document.getElementById("number").value / 1000;
 			    }
 			});
 		</script>
