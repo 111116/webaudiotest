@@ -6,7 +6,9 @@
     </head>
     <body>
     	length of decoded buffer differs among browsers.<br>
-    	Decoded buffer length: <span id="len"></span>
+    	Decoded buffer length: <span id="len"></span><br>
+    	Decoded buffer duration: <span id="dur"></span><br>
+    	Decoded buffer sample rate: <span id="rate"></span>
     	<br>
     	User Agent: <span id="ver"></span>
 		<script type="text/javascript">
@@ -24,6 +26,8 @@
 			            let buffer = decoded;
 			            console.log("Audio decoded", buffer);
 			            document.getElementById("len").innerText = buffer.length.toString();
+			            document.getElementById("dur").innerText = buffer.duration.toString();
+			            document.getElementById("rate").innerText = buffer.sampleRate.toString();
 			        });
 			    };
 			    reader.readAsArrayBuffer(xhr.response);
