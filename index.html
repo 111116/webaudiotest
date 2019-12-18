@@ -2,41 +2,33 @@
 <html>
     <head>
         <meta charset="utf-8"/>
-        <title>custom mp3 decoder</title>
+        <title>mp3 decode</title>
     </head>
     <body>
     	length of decoded buffer differs among browsers.<br>
-    	Buffer length: <span id="len"></span>
+    	Decoded buffer length: <span id="len"></span>
     	<br>
     	User Agent: <span id="ver"></span>
 		<script type="text/javascript">
 			document.getElementById("ver").innerText = navigator.userAgent;
 			var audio = new AudioContext();
-			var gain = audio.createGain();
-			gain.connect(audio.destination);
-			
-			// fetch resource and decode
-			function mp3init(url) {
-			    let xhr = new XMLHttpRequest();
-			    xhr.open("GET", url);
-			    xhr.responseType = 'blob';
-			    xhr.onload = function() {
-			    	console.log('get blob', xhr.response);
-			        let reader = new FileReader();
-			        reader.onload = function(e) {
-			        	console.log('reader result', e.target.result);
-			            audio.decodeAudioData(e.target.result, function(decoded) {
-			                let buffer = decoded;
-			                console.log("Audio decoded", buffer);
-			                document.getElementById("len").innerText = buffer.length.toString();
-			            });
-			        };
-			        reader.readAsArrayBuffer(xhr.response);
-			    }
-			    xhr.send();
+			let xhr = new XMLHttpRequest();
+			xhr.open("GET", "1.mp3");
+			xhr.responseType = 'blob';
+			xhr.onload = function() {
+				console.log('get blob', xhr.response);
+			    let reader = new FileReader();
+			    reader.onload = function(e) {
+			    	console.log('reader result', e.target.result);
+			        audio.decodeAudioData(e.target.result, function(decoded) {
+			            let buffer = decoded;
+			            console.log("Audio decoded", buffer);
+			            document.getElementById("len").innerText = buffer.length.toString();
+			        });
+			    };
+			    reader.readAsArrayBuffer(xhr.response);
 			}
-
-			mp3init('./1.mp3');
+			xhr.send();
 		</script>
     </body>
 </html>
